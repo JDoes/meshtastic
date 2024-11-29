@@ -1,0 +1,18 @@
+ls /dev/ | grep -i cu.usb
+
+for TNODE in $(ls /dev/ | grep -i cu.usb); do echo -e "\n-----\n---$TNODE\n"; meshtastic --set external_notification.enabled false --port /dev/$TNODE; done
+
+for TNODE in $(ls /dev/ | grep -i cu.usb); do echo -e "\n-----\n---$TNODE\n"; meshtastic --set telemetry.air_quality_enabled false --port /dev/$TNODE; done
+
+for TNODE in $(ls /dev/ | grep -i cu.usb); do echo -e "\n-----\n---$TNODE\n"; meshtastic --set device.role CLIENT_MUTE --set device.tzdef EST5EDT,M3.2.0,M11.1.0 --reboot --port /dev/$TNODE; done
+
+for TNODE in $(ls /dev/ | grep -i cu.usb); do echo -e "\n-----\n---$TNODE\n"; meshtastic --set mqtt.root msh/US/PHX --set mqtt.map_reporting_enabled true --reboot --port /dev/$TNODE; done
+
+for TNODE in $(ls /dev/ | grep -i cu.usb); do echo -e "\n-----\n---$TNODE\n"; meshtastic --set bluetooth.mode FIXED_PIN --set bluetooth.fixedPin 473727 --reboot --port /dev/$TNODE; done
+
+for TNODE in $(ls /dev/ | grep -i cu.usb); do echo -e "\n-----\n---$TNODE\n"; meshtastic --set position.fixed_position true --set position.position_broadcast_smart_enabled false --setlat 40.43648 --setlon -79.90791 --setalt 100000 --reboot --port /dev/$TNODE; done
+
+for TNODE in $(ls /dev/ | grep -i cu.usb); do echo -e "\n-----\n---$TNODE\n"; meshtastic --ch-set module_settings.position_precision 32 --ch-index 0 --ch-set module_settings.position_precision 32 --ch-index 1 --reboot --port /dev/$TNODE; done
+
+for TNODE in $(ls /dev/ | grep -i cu.usb); do echo -e "\n-----\n---$TNODE\n"; meshtastic --seturl https://meshtastic.org/e/#CgcSAQE6AgggCjISINOmm2k5DmUAyoby_qHg_833urm0SZhrQ0Gj3rHCZ5wsGgpNeSBDaGFaINbfOgIIIBIMCAE4AUADSAFQHmgB --reboot --port /dev/$TNODE; done
+
