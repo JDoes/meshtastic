@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#contact: berrykevin321@proton.me
+
 ###################################
 #####                         #####
 #####   Vars and Funct'ns     #####
@@ -13,6 +15,8 @@ DIVIDER="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 
 REBOOT_MSG="\n\n########################\n### Device rebooting ###\n########################\n\n\tWatch the screen or console.\n\tOr just wait until the node starts responding to --get lora.region or some other arbitrary command.\n\n"
 
+HW_NAME=$(meshtastic --info | grep -Ei 'longname|shortname|hwmodel')
+USB_DEV_NAME=$(ls /dev/ | grep usb)
 
 ###################################
 #####                         #####
@@ -23,7 +27,11 @@ REBOOT_MSG="\n\n########################\n### Device rebooting ###\n############
 
 clear
 
-echo -e "\nThis is modeled after:\nhttps://meshtastic.org/docs/configuration/\nIf there are any conflicts between this script and the official Meshtastic documentation, always defer to the official docs. The main focus of this script is to do two basic configurations:\n\t1) LoRa Region\n\t2) Bluetooth Setup\n*** RADIO CONFIG docs: https://meshtastic.org/docs/configuration/radio/\n"
+echo -e "\nThis script is modeled after the official Meshtastic documentation:\nhttps://meshtastic.org/docs/configuration/\n\nIf there are any conflicts between this script and the official Meshtastic documentation, always defer to the official docs.\nThe purpose of this script is to go deepr into the configs than https://github.com/JDoes/meshtastic/blob/main/scripts/first-config.sh"
+
+echo -e "\n${DIVIDER}\n\nBefore proceeding, double check that this is the node that you want to configure."
+echo -e "\nHARDWARE INFO:\n${HW_NAME}"
+echo -e "\nUSB Devices in /dev/:\n${USB_DEV_NAME}\n"
 
 #########################
 #-----------------------
