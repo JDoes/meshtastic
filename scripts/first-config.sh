@@ -1,6 +1,7 @@
 #!/bin/bash
 
 DIVIDER="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+REBOOT_MESSAGE="\n\n##########\n###Device rebooting\n##########\n\n\tWatch the screen or console. Or just wait until the node starts responding to --get lora.region or some other arbitrary command.\n\n"
 
 clear
 
@@ -46,12 +47,13 @@ echo -e "\nThis is modeled after:\nhttps://meshtastic.org/docs/configuration/\nI
 		echo -e ""
 		read -p "Since you chose FIXED_PIN, enter a 6-digit BT PIN: " PIN_VALUE
 		echo -e "\n\t\tBT Enabled will be set to ${BTenabled}\n\t\tBT Mode will be set to ${BTmode}\n\t\tThe BT PIN will be set to ${PIN_VALUE}"
-		meshtastic --begin-edit --set bluetooth.enabled ${BTenabled} --set bluetooth.mode ${BTmode} --set bluetooth.fixed_pin ${PIN_VALUE}--commit-edit
+		meshtastic --begin-edit --set bluetooth.enabled ${BTenabled} --set bluetooth.mode ${BTmode} --set bluetooth.fixed_pin ${PIN_VALUE} --commit-edit --reboot
 	else
 		echo -e "\n\t\tBT Enabled will be set to ${BTenabled}\n\t\tBT mode will be set to ${BTmode}"
-		meshtastic --begin-edit --set bluetooth.enabled ${BTenabled} --set bluetooth.mode ${BTmode} --commit-edit
+		meshtastic --begin-edit --set bluetooth.enabled ${BTenabled} --set bluetooth.mode ${BTmode} --commit-edit --reboot
 	fi
 	
+
 	unset BTmode
 	unset BTenabled
 	unset PIN_VALUE
@@ -64,6 +66,9 @@ echo -e "DEVICE:\t\thttps://meshtastic.org/docs/configuration/radio/device/"
 
 #-----------------------
 echo -e "DISPLAY:\thttps://meshtastic.org/docs/configuration/radio/display/"
+
+echo -e "${REBOOT_MESSAGE}"
+sleep 10
 
 #-----------------------
 #LORA:
@@ -78,7 +83,8 @@ echo -e "DISPLAY:\thttps://meshtastic.org/docs/configuration/radio/display/"
 	read -p "Enter the region: " REGION
         
 	echo -e "\n\t\tThe LoRa region will be set to ${REGION}"
-	meshtastic --set lora.region ${REGION}
+	meshtastic --begin-edit --set lora.region ${REGION} --commit-edit --reboot
+
 
 #-lora.tx_enabled: false, true
 
@@ -103,5 +109,30 @@ echo -e "SECURITY:\thttps://meshtastic.org/docs/configuration/radio/security/"
 #-----------------------
 echo -e "USER:\t\thttps://meshtastic.org/docs/configuration/radio/user/"
 
+echo -e "${REBOOT_MESSAGE}"
+sleep 10
 
-echo -e "\n${DIVIDER}\n\nThis concludes the first-time setup.\n/Users/billy/meshtastic-work/github/meshtastic/scripts/extensive-config.sh\n\n\t\tGoodBye!\n"
+echo -e "\n${DIVIDER}\n${DIVIDER}\n\n\t\tSANITY CHECK:\n"
+
+echo -e "Double check the settings below once more:"
+
+echo -e "\n$(meshtastic --info | grep -A4 -iw '"bluetooth": {')"
+echo -e "$(meshtastic --info | grep -A18 -w '"lora": {')"
+
+echo -e "\n${DIVIDER}\n\nThis concludes the first-time setup.\nFor a more in-depth configuration, always refer to the official docs: https://meshtastic.org/docs/\nAdditionally, here is a helper script to do some of the more advanced configs: /Users/billy/meshtastic-work/github/meshtastic/scripts/extensive-config.sh"
+
+echo -e "\n\n\t\tGoodBye!\n"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
