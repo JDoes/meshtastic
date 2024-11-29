@@ -181,7 +181,9 @@ echo -e "Double check the settings below once more:"
 echo -e "\n\n$(meshtastic --info | grep -A4 -iw '"bluetooth": {')\n"
 echo -e "\n\n$(meshtastic --info | grep -A18 -w '"lora": {')\n"
 
-echo -e "\n${DIVIDER}\n\nThis concludes the first-time setup.\nFor a more in-depth configuration, always refer to the official docs: https://meshtastic.org/docs/\nAdditionally, here is a helper script to do some of the more advanced configs: /Users/billy/meshtastic-work/github/meshtastic/scripts/extensive-config.sh"
+echo -e "\n${DIVIDER}\n\nThis concludes the first-time setup."
+echo -e "For a more in-depth configuration, always refer to the official docs: https://meshtastic.org/docs/"
+echo -e "\nAdditionally, here is a helper script to do more advanced configs: https://github.com/JDoes/meshtastic/blob/main/scripts/extensive-config.sh"
 
 echo -e "\n\n\t\tGoodBye!\n"
 
